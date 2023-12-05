@@ -15,8 +15,12 @@ fn handle_msg(ws : &mut Workshop, topic : &str, pl : Cow<'_, str>) {
             if let Ok(b) = pl.parse::<bool>() {
                 ws.light_chain_main.set_state(b).unwrap()
             }
+
+            println!("[ws/light/chain_main] Bad payload! ({})", pl);
         },
-        _ => { }
+        _ => { 
+            println!("Ignoring msg with topic '{}' ... ", topic)
+        }
     }
 }
 
