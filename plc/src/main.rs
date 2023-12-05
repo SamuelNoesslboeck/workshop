@@ -18,9 +18,9 @@ fn handle_msg(ws : &mut Workshop, topic : &str, pl : Cow<'_, str>) {
         "ws/light/chain_main" => {
             if let Ok(b) = pl.parse::<bool>() {
                 ws.light_chain_main.set_state(b).unwrap()
+            } else {
+                println!("[ws/light/chain_main] Bad payload! ({})", pl);
             }
-
-            println!("[ws/light/chain_main] Bad payload! ({})", pl);
         },
         _ => { 
             println!("Ignoring msg with topic '{}' ... ", topic)
@@ -31,6 +31,9 @@ fn handle_msg(ws : &mut Workshop, topic : &str, pl : Cow<'_, str>) {
 fn main() {
     // Create workshop 
         let mut ws = Workshop::new().unwrap();
+
+        // Default
+        ws.light_chain_main.set_low().unwrap();
     // 
 
     // MQTT Connection
@@ -57,5 +60,7 @@ fn main() {
         if let Some(msg) = msg_opt {
             handle_msg(&mut ws, msg.topic(), msg.payload_str())
         }
+
+        println!("Bad msg!")
     }
 }
