@@ -1,0 +1,8 @@
+[package]
+name = "plc"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+paho-mqtt = "0.12.3"
+syact = { path = "../../../libs/syact" }

@@ -13,7 +13,7 @@ fn main() -> ! {
     let dp = arduino_hal::Peripherals::take().unwrap();
     let pins = arduino_hal::pins!(dp);
     let mut serial = arduino_hal::default_serial!(dp, pins, 57600);
-
+    
     // Pins
     let mut d9 = pins.d9.into_output();
     let mut d8 = pins.d8.into_output();
@@ -38,7 +38,7 @@ fn main() -> ! {
         let mut passed = true;
 
         if len >= CODE_LEN {
-            for i in 0 .. 4 {
+            for i in 0 .. CODE_LEN {
                 if buf[i] as u8 != CODE[i] {
                     passed = false;
                     break;
