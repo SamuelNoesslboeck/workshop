@@ -1,4 +1,5 @@
 use std::borrow::Cow;
+use mqtt::QOS_1;
 use paho_mqtt as mqtt;
 
 // Submodules
@@ -8,6 +9,9 @@ use paho_mqtt as mqtt;
 
 const BROKER : &str = "mqtt://localhost:1883";
 const CLIENT_NAME : &str = "plc";
+const TOPICS : [&str; 1] = [
+    "ws/light/chain_main"
+];
 
 fn handle_msg(ws : &mut Workshop, topic : &str, pl : Cow<'_, str>) {
     match topic {
@@ -42,9 +46,12 @@ fn main() {
 
         let client = mqtt::Client::new(client_ops).unwrap();
         client.connect(connect_ops).unwrap();
-    // 
+        client.subscribe_many(&TOPICS, &[QOS_1; 1]).unwrap();
+    //
 
     let rx = client.start_consuming();
+
+    println!("Started listening ... ");
 
     for msg_opt in rx.iter() {
         if let Some(msg) = msg_opt {
