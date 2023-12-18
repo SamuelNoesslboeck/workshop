@@ -1,6 +1,6 @@
 use syact::Setup;
-use syact::ctrl::pin::UniOutPin;
-use syact::ctrl::switch::Relay;
+use syact::device::pin::UniOutPin;
+use syact::device::switch::Relay;
 
 const PIN_LIGHT_CHAIN_MAIN : u8 = 14;
 
@@ -13,7 +13,7 @@ impl Workshop {
         Ok(Self {
             light_chain_main: Relay::new(
                 UniOutPin::new(PIN_LIGHT_CHAIN_MAIN)
-            ).setup_owned()?
+            ).setup_inline()?
         })
     }
 }
