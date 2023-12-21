@@ -1,5 +1,8 @@
 target
 Cargo.lock
 
+# Keys
+assets/username.key
+assets/password.key
 bell/bell-rs/code.key
 services/router_basic_auth.key

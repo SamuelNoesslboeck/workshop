@@ -13,7 +13,7 @@ impl Workshop {
         Ok(Self {
             light_chain_main: Relay::new(
                 UniOutPin::new(PIN_LIGHT_CHAIN_MAIN)
-            ).setup_owned()?
+            ).setup_inline()?
         })
     }
 }

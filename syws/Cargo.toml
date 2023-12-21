@@ -1,0 +1,12 @@
+[package]
+name = "syws"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+ftp = "3.0.1"
+rumqttc = { version = "0.23.0", features = [ "websocket" ] }
+sys-info = "0.9.1"
