@@ -1,6 +1,6 @@
 use syact::Setup;
-use syact::ctrl::pin::UniOutPin;
-use syact::ctrl::switch::Relay;
+use syact::device::pin::UniOutPin;
+use syact::device::switch::Relay;
 
 const PIN_LIGHT_CHAIN_MAIN : u8 = 14;
 

@@ -2,3 +2,4 @@ target
 Cargo.lock
 
 bell/bell-rs/code.key
+services/router_basic_auth.key
