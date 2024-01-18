@@ -1,7 +1,8 @@
 target
 Cargo.lock
+.$roomplan.drawio.bkp
+~$
 
-# Keys
-assets/username.key
-assets/password.key
+# Keys & Private data
+assets/private
 bell/bell-rs/code.key
