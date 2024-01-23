@@ -4,6 +4,6 @@ Cargo.lock
 ~$
 
 # Keys & Private data
-assets/private
+private
 bell/bell-rs/code.key
 services/router_basic_auth.key
