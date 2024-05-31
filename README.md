@@ -1,3 +1,3 @@
 # Circle-Lab
 
-![roomplan](./roomplan.svg)
+![roomplan](./room/roomplan.svg)

@@ -3,9 +3,11 @@ name = "plc"
 version = "0.1.0"
 edition = "2021"
 
-[dependencies]
-paho-mqtt = "0.12.3"
-syact = { path = "../../../libs/syact" }
+[[bin]]
+name = "plc-server"
+path = "bin/server.rs"
 
-[features]
-rasp = [ "syact/rasp" ]
+[dependencies]
+openssl-sys = { version = "0.9.102", features = ["vendored"] }
+paho-mqtt = "0.12.5"
+rocket = "0.5.1"
