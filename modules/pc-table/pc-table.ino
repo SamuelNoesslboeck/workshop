@@ -11,7 +11,6 @@
 // Static fields
 static RTrig ut, lt;
 
-
 void setup() {
   init_debug(115200);
 
