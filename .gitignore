@@ -7,5 +7,9 @@ Cargo.lock
 private
 bell/bell-rs/code.key
 services/router_basic_auth.key
+
+
+# Added by cargo
+/target
 creds.hpp
 wifi_data.hpp
