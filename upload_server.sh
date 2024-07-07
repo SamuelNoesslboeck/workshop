@@ -5,3 +5,4 @@ sudo cp -a "www/." "/var/www/workshop"
 
 sudo a2ensite workshop
 sudo systemctl reload apache2
+sudo service apache2 restart
