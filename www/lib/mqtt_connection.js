@@ -8,8 +8,9 @@ var mqtt;
     function on_connect() {
         console.log("Connected!");
 
-        // Topics
-        mqtt.subscribe("ws/light/chain_main");
+        for (var key in ws_data) {
+            mqtt.subscribe(key);
+        }
     }
 
     function on_msg(msg) {
@@ -17,6 +18,8 @@ var mqtt;
         console.log(msg.destinationName);
         console.log(msg.payloadString);
         console.log(msg);
+
+        ws_data[msg.destinationName] = JSON.parse(msg.payloadString);
     }
 
     function on_fail(msg) {
