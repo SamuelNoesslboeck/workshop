@@ -1,0 +1,39 @@
+body {
+    margin: 0 0 0 0;   
+}
+
+div#context_menu {
+    width: 400px;
+    height: 100vh;
+
+    background-color: red;
+}
+
+div#content_box {
+    position: absolute;
+    top: 0;
+    left: 400px;
+
+    width: calc(100vw - 400px);
+    height: 100vh;
+
+    background-color: blue;
+}
+
+div#header_row {
+    width: 100%;
+    height: 50px;
+
+    background-color: #eeeeee;
+}
+
+div.auto_element {
+    width: 150px;
+    height: 150px;
+
+    margin: 10px 0 0 10px;
+
+    background-color: green;
+
+    text-align: center;
+}
