@@ -15,8 +15,10 @@
 # include "arduino_helpers.hpp"
 
 # include "module.hpp"
-# include "rgb_led.hpp"
 # include "wifi_data.hpp"
+
+// Components
+# include "rgb_led.hpp"
 
 // MQTT Module
 # define HOSTNAME "module-bedside"
@@ -67,9 +69,9 @@ static PubSubClient mqtt_client(esp_client);
       } else if (messageTemp == "false") {
         debugln("| | | > Deactivating main light chain!");
         Bedside::deactive_relay();
+      } else {
+        debugln("| | | > Bad payload, no action was taken!");
       }
-
-      debugln("| | | > Bad payload, no action was taken!");
     }
   }
 

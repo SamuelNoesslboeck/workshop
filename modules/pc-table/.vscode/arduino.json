@@ -1,6 +1,6 @@
 {
     "port": "COM3",
-    "configuration": "eerom_size=0KB,clock_source=internal_32M,clock=32MHz,variant=modelP,upload_speed=baud115200",
-    "board": "AZ-Delivery LGT8F328P:RISC:az",
+    "configuration": "FlashFreq=40,UploadSpeed=921600",
+    "board": "esp32:esp32:nodemcu-32s",
     "sketch": "pc-table.ino"
 }
