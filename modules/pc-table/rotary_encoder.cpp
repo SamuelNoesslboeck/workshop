@@ -1,3 +1,12 @@
+// ########################
+// #    ROTARY-ENCODER    #
+// ########################
+//
+// A library for dealing with rotary encoders
+//
+// > Version 0.1.0
+//
+
 # include "rotary_encoder.hpp"
 
 RotaryEncoder::RotaryEncoder(uint8_t sw, uint8_t dt, uint8_t clk) {

@@ -89,6 +89,7 @@
                 "C:\\Users\\samue\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.4\\variants\\nodemcu-32s",
                 "C:\\Users\\samue\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.4\\libraries\\WiFi\\src",
                 "C:\\Users\\samue\\OneDrive\\Dokumente\\Arduino\\libraries\\PubSubClient\\src",
+                "C:\\Users\\samue\\OneDrive\\Dokumente\\Arduino\\libraries\\DHT_sensor_library_for_ESPx",
                 "c:\\users\\samue\\appdata\\local\\arduino15\\packages\\esp32\\tools\\xtensa-esp32-elf-gcc\\1.22.0-80-g6c4433a-5.2.0\\xtensa-esp32-elf\\include\\c++\\5.2.0",
                 "c:\\users\\samue\\appdata\\local\\arduino15\\packages\\esp32\\tools\\xtensa-esp32-elf-gcc\\1.22.0-80-g6c4433a-5.2.0\\xtensa-esp32-elf\\include\\c++\\5.2.0\\xtensa-esp32-elf",
                 "c:\\users\\samue\\appdata\\local\\arduino15\\packages\\esp32\\tools\\xtensa-esp32-elf-gcc\\1.22.0-80-g6c4433a-5.2.0\\xtensa-esp32-elf\\include\\c++\\5.2.0\\backward",

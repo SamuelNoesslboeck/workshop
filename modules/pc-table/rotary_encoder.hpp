@@ -1,3 +1,12 @@
+// ########################
+// #    ROTARY-ENCODER    #
+// ########################
+//
+// A library for dealing with rotary encoders
+//
+// > Version 0.1.0
+//
+
 # pragma once
 
 # include "Arduino.h"
@@ -29,7 +38,7 @@ public:
     uint8_t clk;
     /// @brief The data pin of the rotary encoder
     uint8_t dt;
-
+    /// @brief A counter value for the total distance moved
     int32_t counter;
 
     /// @brief Create a new rotary encoder
@@ -39,8 +48,12 @@ public:
     RotaryEncoder(uint8_t sw, uint8_t dt, uint8_t clk);
 
     // Checking functions
+        /// @brief Check the current state of the rotary switch
+        /// @return The switch value
         bool check_switch();
 
+        /// @brief Check if a movement has occured in the rotary encoder
+        /// @return The movement that happened
         RotaryMove check_rotary();
     //
 
