@@ -14,12 +14,9 @@ var mqtt;
     }
 
     function on_msg(msg) {
-        console.log("New msg: ");
-        console.log(msg.destinationName);
-        console.log(msg.payloadString);
         console.log(msg);
-
-        ws_data[msg.destinationName] = JSON.parse(msg.payloadString);
+        
+        smartshop.write(msg.destinationName, JSON.parse(msg.payloadString));
     }
 
     function on_fail(msg) {

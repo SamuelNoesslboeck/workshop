@@ -8,9 +8,15 @@
 </head>
 <script src="./lib/mqtt.js"></script>
 <script src="./lib/mqtt_connection.js"></script>
-<script src="./lib/workshop.js"></script>
+<script src="./lib/smartshop.js"></script>
 <body>
-    <div id="context_menu"></div>
+    <div id="context_menu">
+        <div id="stats_box">
+            <h1>CircleLab Stats</h1>
+            <a>Temperature: </a><a id="stats_box_temp">Loading ...</a><br>
+            <a>Humidity: </a><a id="stats_box_humid">Loading ...</a><br>
+        </div>
+    </div>
     <div id="content_box">
         <div id="header_row"></div>
 
