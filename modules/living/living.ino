@@ -1,11 +1,11 @@
-// #####################################
-// #    PC-TABLE - SMARTSHOP MODULE    #
-// #####################################
+// ###################################
+// #    LIVING - SMARTSHOP MODULE    #
+// ###################################
 //
-// > Version 0.3.2
+// > Version 0.3.0
 // 
 
-# define VERSION "0.3.2"
+# define VERSION "0.3.0"
 
 # include "arduino_helpers.hpp"
 
@@ -13,19 +13,16 @@
 # include <WiFi.h>
 # include <PubSubClient.h>
 
-// General module
 # include "module.hpp"
+# include "circlelab/wifi_data.hpp"
 # include "circlelab/mqtt_topics.hpp"
-# include "circlelab/wifi_data.hpp"   // Hidden file
 
 // Components
-# include "rotary_encoder.hpp"
-# include "rtrig.hpp"
-# include "toff.hpp"
+# include "rgb_led.hpp"
 
 // Connection
 /// @brief The hostname of the module, used in WiFi and MQTT connections
-# define HOSTNAME "module-pc-table"
+# define HOSTNAME "module-living"
 /// @brief The amount of milliseconds between reconnection tries when disconnected to the WiFi
 # define WIFI_RECONN_INTERVAL 3000
 /// @brief The amount of milliseconds between reconnection tries when disconnected to the MQTT server
@@ -35,10 +32,10 @@
 /// @brief The amount of millisends between sending a measurement of the temperature and humidity
 # define TEMP_READ_INTERVAL 5000
 
-// Static variables
-static RTrig ut, lt;
-static TOff up(50), lp(50);
+/// @brief Reduced brightness of the LED
+# define LED_BRIGHT 100
 
+// Static
 static WiFiClient esp_client;
 static PubSubClient mqtt_client(esp_client);
 
@@ -82,11 +79,20 @@ static char payload_buffer[128];
   /// @brief Reconnection function for WiFi, will skip if already connected
   void wifi_reconnect() {
     if ((WiFi.status() != WL_CONNECTED) && ((millis() - wifi_reconn_helper) > WIFI_RECONN_INTERVAL)) {
+      living::rgb_led.set_red(LED_BRIGHT);
+      living::rgb_led.set_blue(0);
+      living::rgb_led.set_green(0); 
+
       debugln("> WiFi disconnected! Attempting to reconnect ... ");
       WiFi.disconnect();
       WiFi.reconnect();
       wifi_reconn_helper = millis();
-    } 
+
+      if (WiFi.status() == WL_CONNECTED) {
+        living::rgb_led.set_red(0);
+        living::rgb_led.set_blue(LED_BRIGHT);
+      }
+    }
   }
 
 //
@@ -104,14 +110,27 @@ static char payload_buffer[128];
     // React to messages
     if (topic == TOPIC_LIGHT_CHAIN_MAIN) {
       if (messageTemp == "true") {
-        debugln("| | > Main light chain is activated!");
+        debugln("> Activating main light chain!");
+        living::set_light_chain_main(true);
         smartshop::light::chain_main = true;
       } else if (messageTemp == "false") {
-        debugln("| | > Main light chain is deactivated!");
+        debugln("> Deactivating main light chain!");
+        living::set_light_chain_main(false);
         smartshop::light::chain_main = false;
       } else {
-        debug("| | > Bad payload: ");
-        debugln(messageTemp);
+        debugln("> Bad payload, no action was taken!");
+      }
+    }
+
+    if (topic == TOPIC_LIGHT_CHAIN_LIVING) {
+      if (messageTemp == "true") {
+        debugln("> Activating living light chain!");
+        living::set_light_chain_living(true);
+      } else if (messageTemp == "false") {
+        debugln("> Deactivating living light chain!");
+        living::set_light_chain_living(false);
+      } else {
+        debugln("> Bad payload, no action was taken!");
       }
     }
   }
@@ -123,9 +142,13 @@ static char payload_buffer[128];
     }
 
     while (!mqtt_client.connected() && ((mqtt_active_helper - millis()) > MQTT_RECONN_INTERVAL)) {
+      living::rgb_led.set_green(0);
+      living::rgb_led.set_blue(LED_BRIGHT);
       debug("| > Connecting to MQTT-Server ... ");
 
       if (mqtt_client.connect(HOSTNAME)) {
+        living::rgb_led.set_green(LED_BRIGHT);
+        living::rgb_led.set_blue(0);
         debugln("done!");
         
         // Subscribe to topics
@@ -153,51 +176,24 @@ static char payload_buffer[128];
       debugln("done!");
     }
   }
-
-  void mqtt_send_temp() {
-    if ((millis() - mqtt_temp_helper) > TEMP_READ_INTERVAL) {
-      debugln("> Sending tempature status ... ");
-
-      smartshop::humid = pc_table::get_humid();
-      smartshop::temp = pc_table::get_temp();
-
-      if (pc_table::dht.getStatus()) {
-        debug("| > Measurement failed! Error: ");
-        debugln(pc_table::dht.getStatusString());
-      } else {
-        debug("| > Temperature: ");
-        debugln(smartshop::temp);
-        debug("| > Humidity: ");
-        debugln(smartshop::humid);
-
-        sprintf(payload_buffer, "%.2f", smartshop::temp);
-        mqtt_client.publish(TOPIC_TEMP, payload_buffer, (bool)true);
-
-        sprintf(payload_buffer, "%.2f", smartshop::humid);
-        mqtt_client.publish(TOPIC_HUMID, payload_buffer, (bool)true);
-      }
-
-      mqtt_temp_helper = millis();
-      
-      debugln("| > Done!");
-    }
-  }
-// 
+//
 
 void setup() {
   init_debug(115200);
 
-  debugln("# PC-Table Module");
-  debugln("> Initializing devices ... ");
+  debugln("\n# Bedside module");
+  debug("> Version: ");
+  debugln(VERSION);
+  debug("> Initializing module ... ");
 
-  pc_table::setup();
+  living::setup();
 
-  debugln("| > Done!");
+  debugln("done!");
 
   debugln("> Setting up Wifi ... ");
   print_wifi_info();
 
-  // Setup WiFi
+  // Configure WiFi
   WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE, INADDR_NONE);
   WiFi.setHostname(HOSTNAME);
   WiFi.mode(WIFI_MODE_STA);
@@ -206,15 +202,23 @@ void setup() {
   debug("| > Connecting ");
   while (WiFi.status() != WL_CONNECTED) {
     debug(".");
-    delay(500);
+    living::rgb_led.set_red(LED_BRIGHT);
+    delay(250);
+    living::rgb_led.set_red(0);
+    delay(250);
   }
   debugln(" done!");
+
+  living::rgb_led.set_red(0);
   
   debug("| | > IP: ");
   debugln(WiFi.localIP());
 
   debug("| | > RRSI: ");
   debugln(WiFi.RSSI());
+
+  // Wifi connected
+  living::rgb_led.set_blue(LED_BRIGHT);
   
   // MQTT
   debugln("> Setting up MQTT ... ");
@@ -222,48 +226,18 @@ void setup() {
   
   mqtt_client.setServer(CIRCLELAB_WIFI_PLC_HOST, CIRCLELAB_WIFI_PLC_MQTT_PORT);
   mqtt_client.setCallback(mqtt_callback);
-
-  mqtt_reconnect();
   
   debugln("| > Done!");
 
   delay(100);   // Wait before starting to recv msgs
-
-  debugln("> Initialization complete!");
 }
 
-
 void loop() {
-  // Rotary-Encoders
-  RotaryMove upper_val = pc_table::upper_encoder.check_rotary();
-  RotaryMove lower_val = pc_table::lower_encoder.check_rotary();
-
-  if (ut.check(up.check(pc_table::upper_encoder.check_switch()))) {
-    debugln("| > Upper switch pressed!");
-    mqtt_client.publish(TOPIC_LIGHT_CHAIN_MAIN, "true", true);
-  }
-
-  if (lt.check(lp.check(pc_table::lower_encoder.check_switch()))) {
-    debugln("| > Lower switch pressed!");
-    mqtt_client.publish(TOPIC_LIGHT_CHAIN_MAIN, "false", true);
-  }
-
-  if (is_movement(upper_val)) {
-    debug("| > Upper rotary encoder moved to: ");
-    debugln(pc_table::upper_encoder.counter); 
-  }
-
-  if (is_movement(lower_val)) {
-    debug("| > Lower rotary encoder moved to: ");
-    debugln(pc_table::lower_encoder.counter); 
-  }
-
   // Maintain Connections
   wifi_reconnect();
   mqtt_reconnect();
 
   mqtt_send_active();
-  mqtt_send_temp();
 
   mqtt_client.loop();
 }

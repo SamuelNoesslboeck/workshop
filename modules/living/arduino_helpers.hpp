@@ -1,13 +1,13 @@
 /// # arduino_helpers
 /// 
-/// - Version: 0.1.0
+/// - Version: 0.1.1
 ///
 /// General debug and other macros
 
 # pragma once
 
 # ifndef DEBUG
-    # define DEBUG false
+    # define DEBUG true
 # endif
 
 # ifndef DEBUG_SERIAL
