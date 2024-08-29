@@ -30,7 +30,7 @@ if ((host == "127.0.0.1") || (host == "localhost")) {
     host = FALLBACK_HOST;
 }
 
-mqtt = new Paho.MQTT.Client(host, PORT, "circlelab_webclient");
+mqtt = new Paho.MQTT.Client(host, PORT, "circlelab_webclient-" + Math.round(Math.random() * 100000));
 
 var options = {
     timeout: 3,
