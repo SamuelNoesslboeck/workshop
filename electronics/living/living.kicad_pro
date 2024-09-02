@@ -239,7 +239,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "pc-table.kicad_pro",
+    "filename": "living.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -372,7 +372,7 @@
     },
     "net_format_name": "",
     "page_layout_descr_file": "",
-    "plot_directory": "output/",
+    "plot_directory": "",
     "spice_current_sheet_as_root": false,
     "spice_external_command": "spice \"%I\"",
     "spice_model_current_sheet_as_root": true,
@@ -384,7 +384,7 @@
   },
   "sheets": [
     [
-      "abcf7a08-1dc9-4a18-a79a-435d84f8f797",
+      "e73f36c0-c163-4d41-ac31-16d97cc99fad",
       "Root"
     ]
   ],
