@@ -70,9 +70,9 @@ static char payload_buffer[128];
   /// @brief Prints out configuration data used for the MQTT connection
   void print_mqtt_info() {
     debug("| > ADDR: 'mqtt://");
-    debug(CIRCLELAB_WIFI_PLC_HOST); 
+    debug(CIRCLELAB_WIFI_HUB_HOST); 
     debug(":");
-    debug(CIRCLELAB_WIFI_PLC_MQTT_PORT);
+    debug(CIRCLELAB_WIFI_HUB_MQTT_PORT);
     debugln("'");
   }
 // 
@@ -220,7 +220,7 @@ void setup() {
   debugln("> Setting up MQTT ... ");
   print_mqtt_info();
   
-  mqtt_client.setServer(CIRCLELAB_WIFI_PLC_HOST, CIRCLELAB_WIFI_PLC_MQTT_PORT);
+  mqtt_client.setServer(CIRCLELAB_WIFI_HUB_HOST, CIRCLELAB_WIFI_HUB_MQTT_PORT);
   mqtt_client.setCallback(mqtt_callback);
 
   mqtt_reconnect();
