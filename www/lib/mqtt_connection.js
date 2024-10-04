@@ -1,5 +1,5 @@
 // Network data
-const HOST = "plc.local";
+const FALLBACK_HOST = "plc.local";
 const PORT = 9001;
 
 var mqtt;
@@ -8,18 +8,14 @@ var mqtt;
     function on_connect() {
         console.log("Connected!");
 
-        for (var key in ws_data) {
+        for (var key in __ws_data) {
             mqtt.subscribe(key);
         }
     }
 
     function on_msg(msg) {
-        console.log("New msg: ");
-        console.log(msg.destinationName);
-        console.log(msg.payloadString);
-        console.log(msg);
-
-        ws_data[msg.destinationName] = JSON.parse(msg.payloadString);
+        // console.log(msg.destinationName + ": " + msg.payloadString);
+        smartshop.write(msg.destinationName, JSON.parse(msg.payloadString));
     }
 
     function on_fail(msg) {
@@ -28,7 +24,13 @@ var mqtt;
 // 
 
 // Connecting
-mqtt = new Paho.MQTT.Client(HOST, PORT, "circlelab_webclient");
+var host = window.location.hostname;
+
+if ((host == "127.0.0.1") || (host == "localhost")) {
+    host = FALLBACK_HOST;
+}
+
+mqtt = new Paho.MQTT.Client(host, PORT, "circlelab_webclient-" + Math.round(Math.random() * 100000));
 
 var options = {
     timeout: 3,

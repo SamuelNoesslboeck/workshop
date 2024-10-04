@@ -2,11 +2,21 @@ body {
     margin: 0 0 0 0;   
 }
 
+h1 {
+    margin: 0 0 0 0;
+}
+
 div#context_menu {
     width: 400px;
     height: 100vh;
 
     background-color: red;
+}
+
+div#stats_box {
+    height: 300px;
+
+    background-color: aqua;
 }
 
 div#content_box {

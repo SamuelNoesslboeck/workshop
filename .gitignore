@@ -1,3 +1,4 @@
+# General
 target
 Cargo.lock
 .$roomplan.drawio.bkp
@@ -13,3 +14,10 @@ services/router_basic_auth.key
 /target
 creds.hpp
 wifi_data.hpp
+
+# Electronics
+electronics/living/living-backups
+electronics/pc-table/pc-table-backups
+\#auto_saved_files\#
+~*
+_autosave-*
