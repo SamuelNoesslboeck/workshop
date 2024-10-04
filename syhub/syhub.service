@@ -1,0 +1,8 @@
+[Unit]
+Description=syhub
+
+[Service]
+ExecStart=
+
+[Install]
+WantedBy=multi-user.target

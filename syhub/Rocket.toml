@@ -1,0 +1,6 @@
+[global]
+port = 44301
+
+[default.tls]
+certs = "certs/domain.crt"
+key = "certs/domain.key"
