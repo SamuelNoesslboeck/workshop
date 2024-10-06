@@ -1,17 +1,14 @@
 use rocket::{get, launch, routes};
-use rocket::fs::{FileServer, Options};
+use rocket::fs::{FileServer, NamedFile, Options};
 use rocket::response::stream::{Event, EventStream};
-use rocket::tokio::time;
 use rocket::tokio::time::Duration;
 
 use rumqttc::{MqttOptions, AsyncClient, QoS};
 use rumqttc::Event::Incoming;
 use rumqttc::Packet::Publish;
-use core::str;
-use std::error::Error;
 
 #[get("/events")]
-fn stream() -> EventStream![] {
+pub fn stream() -> EventStream![] {
     EventStream! {
         let mut mqttoptions = MqttOptions::new("syhub", "hub.local", 1883);
         mqttoptions.set_keep_alive(Duration::from_secs(5));
@@ -28,14 +25,14 @@ fn stream() -> EventStream![] {
 }
 
 #[get("/")]
-fn index() -> &'static str {
-    "Hello, world!"
+pub async fn index() -> Option<NamedFile> {
+    NamedFile::open("www/index.html").await.ok()
 }
 
 #[launch]
 fn rocket() -> _ {
     rocket::build()
         .mount("/", routes![index, stream])
-        .mount("/test", FileServer::new("../www", Options::Index))
+        .mount("/", FileServer::new("./www", Options::Index))
 
 }
