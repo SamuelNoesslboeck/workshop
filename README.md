@@ -1,7 +1,6 @@
 <p align="center">
-  <img src="/design/circlelab-title.svg" width="80%" />
+  <img src="design/circlelab-title.svg" width="80%" />
 </p>
-
 
 ---
 
