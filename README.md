@@ -1,13 +1,11 @@
 <p align="center">
-  <img src="design/circlelab-title.svg" width="80%" />
+  <img src="design/logo/circlelab_logo_titled.svg" width="75%" />
 </p>
 
 ---
 
 ## Room
 
-![roomplan](./room/roomplan.svg)
+![roomplan](room/roomplan.svg)
 
 ## Smartshop
-
-> Version 0.1.0
