@@ -238,12 +238,12 @@ void loop() {
   RotaryMove upper_val = pc_table::upper_encoder.check_rotary();
   RotaryMove lower_val = pc_table::lower_encoder.check_rotary();
 
-  if (ut.check(up.check(pc_table::upper_encoder.check_switch()))) {
+  if (ut.check(up.exec(pc_table::upper_encoder.check_switch()))) {
     debugln("| > Upper switch pressed!");
     mqtt_client.publish(TOPIC_LIGHT_CHAIN_MAIN, "true", true);
   }
 
-  if (lt.check(lp.check(pc_table::lower_encoder.check_switch()))) {
+  if (lt.check(lp.exec(pc_table::lower_encoder.check_switch()))) {
     debugln("| > Lower switch pressed!");
     mqtt_client.publish(TOPIC_LIGHT_CHAIN_MAIN, "false", true);
   }
