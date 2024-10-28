@@ -1,8 +1,14 @@
 [Unit]
-Description=syhub
+Description=syhub service
+After=network.target
+StartLimitIntervalSec=0
 
 [Service]
-ExecStart=
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+ExecStart=/usr/bin/sh /opt/syhub/start.sh
 
 [Install]
 WantedBy=multi-user.target
